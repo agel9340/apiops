@@ -37,16 +37,37 @@ jobs:
           node-version: "20"
       - run: npm install -g @stoplight/spectral-cli
       
-      - name: Debug - List API files
+      - name: Debug - Comprehensive directory check
         run: |
-          cd "${{ GITHUB.WORKSPACE }}/${{ inputs.API_MANAGEMENT_SERVICE_OUTPUT_FOLDER_PATH }}/apis"
+          echo "=== Current working directory ==="
           pwd
-          ls -la
+          echo ""
+          echo "=== Full GITHUB_WORKSPACE ==="
+          ls -la "${{ GITHUB.WORKSPACE }}" || echo "WORKSPACE doesn't exist"
+          echo ""
+          echo "=== apimartifacts folder ==="
+          ls -la "${{ GITHUB.WORKSPACE }}/apimartifacts" || echo "apimartifacts doesn't exist"
+          echo ""
+          echo "=== apis subfolder ==="
+          ls -la "${{ GITHUB.WORKSPACE }}/apimartifacts/apis" || echo "apis doesn't exist"
+          echo ""
+          echo "=== All files in repo ==="
+          find "${{ GITHUB.WORKSPACE }}" -type f \( -name "*.json" -o -name "*.yaml" -o -name "*.yml" \) | head -30
+        shell: bash
 
       - name: Run Spectral
         run: |
-          cd "${{ GITHUB.WORKSPACE }}/${{ inputs.API_MANAGEMENT_SERVICE_OUTPUT_FOLDER_PATH }}/apis"
-          spectral lint *.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
+          LINT_PATH="${{ GITHUB.WORKSPACE }}/${{ inputs.API_MANAGEMENT_SERVICE_OUTPUT_FOLDER_PATH }}/apis"
+          echo "Looking in: $LINT_PATH"
+          if [ -d "$LINT_PATH" ]; then
+            echo "Directory exists, file count:"
+            find "$LINT_PATH" -type f | wc -l
+            spectral lint "$LINT_PATH"/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
+          else
+            echo "ERROR: Directory does not exist!"
+            exit 1
+          fi
+        shell: bash
 
       # Add this step for each APIM environment and pass specific set of secrets that you want replaced in the env section below
       - name: "Perform namevalue secret substitution in configuration.${{ inputs.API_MANAGEMENT_ENVIRONMENT}}.yaml"
