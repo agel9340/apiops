@@ -8,6 +8,12 @@ namedValues:
     properties:
       displayName: secret
       value: "secret"
+  - name: kv-secret-demo
+    properties: 
+      displayName: kv-secret-demo
+      keyVault:
+        identityClientId: b5e12f09-fdb4-4d10-889f-8e4518191cba
+        secretIdentifiers: https://demo-keyvault132.vault.azure.net/secrets/kv-secret-demo-PROD/e35ab49964064713b0b7877395147b05
 loggers:
 diagnostics:
 backends:
