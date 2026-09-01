@@ -62,7 +62,8 @@ jobs:
           if [ -d "$LINT_PATH" ]; then
             echo "Directory exists, file count:"
             find "$LINT_PATH" -type f | wc -l
-            spectral lint "$LINT_PATH"/*.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
+            cd "$LINT_PATH"
+            spectral lint *.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
           else
             echo "ERROR: Directory does not exist!"
             exit 1
