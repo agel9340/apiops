@@ -60,10 +60,15 @@ jobs:
           LINT_PATH="${{ GITHUB.WORKSPACE }}/${{ inputs.API_MANAGEMENT_SERVICE_OUTPUT_FOLDER_PATH }}/apis"
           echo "Looking in: $LINT_PATH"
           if [ -d "$LINT_PATH" ]; then
-            echo "Directory exists, file count:"
-            find "$LINT_PATH" -type f | wc -l
+            echo "Directory exists, listing all files:"
             cd "$LINT_PATH"
-            spectral lint *.{json,yml,yaml} --ruleset https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
+            ls -la
+            echo ""
+            echo "File extensions:"
+            find . -type f -exec basename {} \;
+            echo ""
+            echo "Attempting spectral lint on all files:"
+            spectral lint * --ruleset https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
           else
             echo "ERROR: Directory does not exist!"
             exit 1
