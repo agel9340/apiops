@@ -17,6 +17,7 @@
 	<!-- Customize the responses -->
 	<outbound>
 		<base />
+		<validate-content unspecified-content-type-action="ignore" max-size="400" size-exceeded-action="ignore" errors-variable-name="validationErrors" />
 	</outbound>
 	<!-- Handle exceptions and customize error responses  -->
 	<on-error>
