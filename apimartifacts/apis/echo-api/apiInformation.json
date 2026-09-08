@@ -1,9 +1,10 @@
 {
   "properties": {
-    "path": "echo",
+    "path": "rest/echo",
     "apiRevision": "1",
     "authenticationSettings": {},
-    "displayName": "Echo API",
+    "description": "UPDATED ECHO - This shouldn\u0027t get updated ideally to prod",
+    "displayName": "Echo API UPDATED",
     "isCurrent": true,
     "protocols": [
       "https"

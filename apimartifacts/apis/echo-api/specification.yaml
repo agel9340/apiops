@@ -1,9 +1,10 @@
 openapi: 3.0.1
 info:
-  title: Echo API
+  title: Echo API UPDATED
+  description: UPDATED ECHO - This shouldn't get updated ideally to prod
   version: '1.0'
 servers:
-  - url: https://dev-apim-cicd.azure-api.net/echo
+  - url: https://dev-apim-cicd.azure-api.net/rest/echo
 paths:
   /resource:
     get:
