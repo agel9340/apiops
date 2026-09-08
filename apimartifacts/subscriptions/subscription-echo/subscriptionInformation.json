@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "displayName": "subscription-echo",
+    "scope": "/apis",
+    "allowTracing": false,
+    "state": "active"
+  }
+}
