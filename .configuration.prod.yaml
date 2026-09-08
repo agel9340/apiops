@@ -18,3 +18,7 @@ loggers:
 diagnostics:
 backends:
 apis:
+  - name: swagger-petstore
+    properties: 
+      displayName: "Swagger Petstore"
+      path: "rest/petstore"
